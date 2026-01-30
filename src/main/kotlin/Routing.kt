@@ -1,12 +1,10 @@
 package ru
 
-import io.ktor.openapi.*
 import io.ktor.server.application.*
-import io.ktor.server.plugins.swagger.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-fun Application.configureRouting() {
+fun Application.configureBasicRoutes() {
     routing {
         get("/") {
             call.respondText("Hello World!")
