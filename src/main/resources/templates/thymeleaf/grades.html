@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Оценки ученика</title>
+    <link rel="stylesheet" href="base.css">
+</head>
+<body>
+
+<div class="grades-container">
+    <h1>Приватная зона</h1>
+    <p class="info">Ваши оценки</p>
+
+    <table class="grades-table">
+        <thead>
+        <tr>
+            <th>Предмет</th>
+            <th>Оценка</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="grade : ${grades}">
+            <td th:text="${grade.subject}">Математика</td>
+            <td th:text="${grade.value}">5</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <button id="logout-btn">Выйти</button>
+
+    <div class="error" id="error"></div>
+</div>
+
+<script src="grades.js"></script>
+</body>
+</html>
