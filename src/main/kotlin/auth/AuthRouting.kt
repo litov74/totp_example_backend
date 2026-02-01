@@ -22,8 +22,26 @@ fun Application.authRoutes() {
                 call.respond(HttpStatusCode.Unauthorized)
                 return@post
             }
-
+            call.response.cookies.append(
+                Cookie(
+                    name = "token",
+                    value = "demo-token",
+                    httpOnly = true,
+                    path = "/"
+                )
+            )
             call.respond(LoginResponse(token = "demo-token"))
+        }
+        post("/logout") {
+            call.response.cookies.append(
+                Cookie(
+                    name = "token",
+                    value = "",
+                    path = "/",
+                    maxAge = 0
+                )
+            )
+            call.respond(HttpStatusCode.OK)
         }
     }
 }
