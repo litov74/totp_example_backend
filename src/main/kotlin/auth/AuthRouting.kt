@@ -5,8 +5,10 @@ import io.ktor.server.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.request.*
 import io.ktor.http.*
+import ru.TotpUtil
 import ru.dto.LoginRequest
 import ru.dto.LoginResponse
+import ru.totp_sample_secret_key
 
 fun Application.authRoutes() {
     routing {
@@ -17,8 +19,15 @@ fun Application.authRoutes() {
                 return@post
             }
 
-            //TODO: убрать заглушку
-            if (body.totp != "123456") {
+            val now = System.currentTimeMillis()
+
+            val valid = listOf(
+                TotpUtil.generateTotp(totp_sample_secret_key, now - 30_000),
+                TotpUtil.generateTotp(totp_sample_secret_key, now),
+                TotpUtil.generateTotp(totp_sample_secret_key, now + 30_000)
+            ).contains(body.totp)
+
+            if (!valid) {
                 call.respond(HttpStatusCode.Unauthorized)
                 return@post
             }
